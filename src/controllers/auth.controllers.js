@@ -1,10 +1,14 @@
+const path = require("path");
+const fs = require("fs/promises");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
+require("dotenv").config();
 const Jimp = require("jimp");
-const path = require("path");
+const { v4: uuid } = require("uuid");
 const { addUser, getUserByEmail, updateUser } = require("../models");
-const fs = require("fs");
+
+const { PORT } = process.env;
 
 const userRegistration = async (req, res, next) => {
   const { password, email } = req.body;
@@ -54,6 +58,7 @@ const userLogin = async (req, res, next) => {
 };
 
 const userLogout = async (req, res, next) => {
+  // проверка токена в предыдущем мидлваре
   let { _id, token } = req.user;
   token = null;
   const user = await updateUser(_id, { token });
@@ -62,22 +67,20 @@ const userLogout = async (req, res, next) => {
 };
 
 const userCurrent = async (req, res, next) => {
+  // проверка токена в предыдущем мидлваре
   const { email, subscription } = req.user;
   res.status(200).json({ email, subscription });
 };
 
 const modifyUserAvatar = async (req, res, next) => {
   const avatarFile = await Jimp.read(req.file.path);
-  const newPath =
-    path.join("public/avatars", "name.") + avatarFile.getExtension();
-  fs.unlink("tmp/" + req.file.filename, (err) => {
-    if (err) {
-      next(err);
-    }
-  });
+  const fileName = uuid() + "." + avatarFile.getExtension();
+  const newPath = path.join("public/avatars", fileName);
   avatarFile.resize(250, 250).write(newPath);
-
-  res.status(200).json({ avatarURL: newPath });
+  await fs.unlink("tmp/" + req.file.filename);
+  const avatarURL = `http://localhost:${PORT}/avatars/${fileName}`;
+  const userFromBD = await updateUser(req.user._id, { avatarURL });
+  res.status(200).json({ avatarURL: userFromBD.avatarURL });
 };
 
 module.exports = {

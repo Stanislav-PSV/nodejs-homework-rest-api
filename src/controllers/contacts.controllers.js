@@ -15,7 +15,7 @@ const getContactByID = async (req, res, next) => {
   try {
     const contact = await getContactById(
       contactId
-    )
+    ); /* выбросит ошибку если contactId не валиден, вернеи null, если валидный contactId не найден */
     if (!contact) {
       throw new Error("contact's id is not found");
     }
@@ -34,7 +34,7 @@ const deleteContact = async (req, res, next) => {
   try {
     const contact = await removeContact(
       contactId
-    );
+    ); /* выбросит ошибку если contactId не валиден, вернеи null, если валидный contactId не найден */
     if (!contact) {
       throw new Error("contact's id is not found");
     }
@@ -50,7 +50,7 @@ const putContact = async (req, res, next) => {
     const updatedContact = await updateContact(
       contactId,
       req.body
-    );
+    ); /* выбросит ошибку если contactId не валиден, вернеи null, если валидный contactId не найден */
     if (!updatedContact) {
       throw new Error("contact's id is not found");
     }

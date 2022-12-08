@@ -9,7 +9,7 @@ const validationToken = async (req, res, next) => {
       const verifiedTokenUser = jwt.verify(
         token,
         process.env.JWT_SECRET
-      );
+      ); /* verify выбросит ошибку, если token invalid */
       const user = await getUserById(verifiedTokenUser._id);
       if (!user || user.token !== token) {
         throw new Error();
