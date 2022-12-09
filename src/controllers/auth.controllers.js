@@ -119,6 +119,7 @@ const verifyUserRepeat = async (req, res, next) => {
   sendEmail({ email, verificationToken: userFromBD.verificationToken });
   res.status(200).json({ message: "Verification email sent" });
 };
+
 module.exports = {
   userRegistration,
   userLogin,
@@ -128,3 +129,4 @@ module.exports = {
   verifyUser,
   verifyUserRepeat,
 };
+

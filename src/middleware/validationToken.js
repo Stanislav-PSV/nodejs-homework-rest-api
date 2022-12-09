@@ -9,7 +9,8 @@ const validationToken = async (req, res, next) => {
       const verifiedTokenUser = jwt.verify(
         token,
         process.env.JWT_SECRET
-      );
+      ); 
+
       const user = await getUserById(verifiedTokenUser._id);
       if (!user || user.token !== token) {
         throw new Error();

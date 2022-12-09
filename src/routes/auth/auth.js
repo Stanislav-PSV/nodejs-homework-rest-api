@@ -21,11 +21,13 @@ authRouter.post(
   validationBody(schemaReg),
   tryCatchWrapper(userRegistration)
 );
+
 authRouter.post(
   "/login",
   validationBody(schemaReg),
   tryCatchWrapper(userLogin)
 );
+
 authRouter.post("/current", validationToken, tryCatchWrapper(userCurrent));
 authRouter.post("/logout", validationToken, tryCatchWrapper(userLogout));
 authRouter.patch(
@@ -34,10 +36,12 @@ authRouter.patch(
   tryCatchWrapper(upload.single("avatar")),
   tryCatchWrapper(modifyUserAvatar)
 );
+
 authRouter.get("/verify/:verificationToken", tryCatchWrapper(verifyUser));
 authRouter.post(
   "/verify",
   validationBody(schemaEmail),
   tryCatchWrapper(verifyUserRepeat)
 );
+
 module.exports = authRouter;

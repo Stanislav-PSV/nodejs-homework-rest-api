@@ -15,7 +15,6 @@ const getContactByID = async (req, res, next) => {
   try {
     const contact = await getContactById(
       contactId
-    );
     if (!contact) {
       throw new Error("contact's id is not found");
     }
@@ -34,7 +33,6 @@ const deleteContact = async (req, res, next) => {
   try {
     const contact = await removeContact(
       contactId
-    );
     if (!contact) {
       throw new Error("contact's id is not found");
     }
@@ -50,7 +48,6 @@ const putContact = async (req, res, next) => {
     const updatedContact = await updateContact(
       contactId,
       req.body
-    );
     if (!updatedContact) {
       throw new Error("contact's id is not found");
     }
