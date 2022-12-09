@@ -58,7 +58,6 @@ const userLogin = async (req, res, next) => {
 };
 
 const userLogout = async (req, res, next) => {
-  // проверка токена в предыдущем мидлваре
   let { _id, token } = req.user;
   token = null;
   const user = await updateUser(_id, { token });
@@ -67,7 +66,6 @@ const userLogout = async (req, res, next) => {
 };
 
 const userCurrent = async (req, res, next) => {
-  // проверка токена в предыдущем мидлваре
   const { email, subscription } = req.user;
   res.status(200).json({ email, subscription });
 };
@@ -90,3 +88,4 @@ module.exports = {
   userCurrent,
   modifyUserAvatar,
 };
+

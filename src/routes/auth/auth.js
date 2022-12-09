@@ -13,6 +13,7 @@ const {
 const validationToken = require("../../middleware/validationToken");
 const { upload } = require("../../middleware/UploadFile");
 
+
 authRouter.post(
   "/signup",
   validationBody(schemaReg),
